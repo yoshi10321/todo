@@ -1,12 +1,14 @@
-package com.github.yoshi10321.todoapp;
+package com.github.yoshi10321.todoapp.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.yoshi10321.todoapp.R;
+
 /**
- * Created by a12711 on 2015/06/29.
+ * Created by mitsui yoshito on 2015/06/29.
  */
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CustomViewHolder> {
 

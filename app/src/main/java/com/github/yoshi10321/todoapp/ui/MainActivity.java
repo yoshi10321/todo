@@ -1,4 +1,4 @@
-package com.github.yoshi10321.todoapp;
+package com.github.yoshi10321.todoapp.ui;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.github.yoshi10321.todoapp.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
