@@ -6,9 +6,19 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".TodoApplication"
+        >
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="todo_aa.db"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1"/>
+
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

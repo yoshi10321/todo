@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="item" type="com.github.yoshi10321.todoapp.model.ItemDto"/>
+        <variable name="item" type="com.github.yoshi10321.todoapp.ui.bind.Item"/>
+        <variable name="onEditClick" type="android.view.View.OnClickListener"/>
     </data>
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClickListener="@{onEditClick}">
 
-        <EditText
+        <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.title}"/>
+            android:text="@{item.title}"
+            android:padding="10dp"
+            android:singleLine="false"
+            />
     </LinearLayout>
 </layout>

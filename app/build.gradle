@@ -51,4 +51,12 @@ dependencies {
     // databinding
     apt 'com.android.databinding:compiler:1.0-rc0'
 
+    // stetho
+    compile 'com.facebook.stetho:stetho:1.1.1'
+
+    // json parser
+    compile 'com.google.code.gson:gson:2.3.1'
+
+    // otto
+    compile 'com.squareup:otto:1.3.7'
 }
