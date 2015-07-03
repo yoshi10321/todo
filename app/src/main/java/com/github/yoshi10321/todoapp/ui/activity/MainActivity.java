@@ -1,12 +1,10 @@
 package com.github.yoshi10321.todoapp.ui.activity;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.github.yoshi10321.todoapp.R;
@@ -14,6 +12,7 @@ import com.github.yoshi10321.todoapp.databinding.ActivityMainBinding;
 import com.github.yoshi10321.todoapp.event.BusHolder;
 import com.github.yoshi10321.todoapp.event.TextUpdateEvent;
 import com.github.yoshi10321.todoapp.ui.adapter.RecyclerAdapter;
+import com.github.yoshi10321.todoapp.ui.callback.TaskItemTouchHelperCallback;
 import com.squareup.otto.Subscribe;
 
 
@@ -33,6 +32,10 @@ public class MainActivity extends FragmentActivity {
         binding.recyclerTodoList.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerAdapter = new RecyclerAdapter(this);
         binding.recyclerTodoList.setAdapter(mRecyclerAdapter);
+
+        // swipe,drag処理
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TaskItemTouchHelperCallback(mRecyclerAdapter));
+        itemTouchHelper.attachToRecyclerView(binding.recyclerTodoList);
     }
 
     @Override
@@ -47,10 +50,10 @@ public class MainActivity extends FragmentActivity {
         BusHolder.get().unregister(this);
     }
 
-    View.OnClickListener mFabClickListener = new View.OnClickListener() {
+    private View.OnClickListener mFabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mRecyclerAdapter.addItem("test");
+            mRecyclerAdapter.addItem("task");
         }
     };
 

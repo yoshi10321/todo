@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.github.yoshi10321.todoapp.IntentKey;
 import com.github.yoshi10321.todoapp.R;
 import com.github.yoshi10321.todoapp.event.BusHolder;
 import com.github.yoshi10321.todoapp.event.TextUpdateEvent;
@@ -30,14 +31,14 @@ public class EditDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.dialog_edit, null);
         final EditText editText = (EditText) view.findViewById(R.id.text);
-        editText.setText(getArguments().getString("title"));
+        editText.setText(getArguments().getString(IntentKey.TASK_TEXT.getText()));
         builder.setView(view)
                 .setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        TextUpdateEvent event = new TextUpdateEvent(editText.getText().toString(), getArguments().getInt("position"));
+                        TextUpdateEvent event = new TextUpdateEvent(editText.getText().toString(),
+                                getArguments().getInt(IntentKey.POSITION.getText()));
                         BusHolder.get().post(event);
-
                     }
                 })
         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
