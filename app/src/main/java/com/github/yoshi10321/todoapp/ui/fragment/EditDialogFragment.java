@@ -3,18 +3,19 @@ package com.github.yoshi10321.todoapp.ui.fragment;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 
 import com.github.yoshi10321.todoapp.IntentKey;
 import com.github.yoshi10321.todoapp.R;
+import com.github.yoshi10321.todoapp.databinding.DialogEditBinding;
 import com.github.yoshi10321.todoapp.event.BusHolder;
-import com.github.yoshi10321.todoapp.event.TextUpdateEvent;
+import com.github.yoshi10321.todoapp.event.TaskUpdateEvent;
+import com.github.yoshi10321.todoapp.ui.bind.TaskData;
 
 /**
  * Created by mitsui yoshito on 2015/07/02.
@@ -30,14 +31,20 @@ public class EditDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View view = inflater.inflate(R.layout.dialog_edit, null);
-        final EditText editText = (EditText) view.findViewById(R.id.text);
-        editText.setText(getArguments().getString(IntentKey.TASK_TEXT.getText()));
+
+        final DialogEditBinding binding = DataBindingUtil.bind(view);
+        final TaskData task = new TaskData();
+        task.setText(getArguments().getString(IntentKey.TASK_TEXT.toString()));
+        task.setDone(getArguments().getBoolean(IntentKey.TASK_CHECKED.toString()));
+        binding.setTaskData(task);
+
         builder.setView(view)
                 .setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        TextUpdateEvent event = new TextUpdateEvent(editText.getText().toString(),
-                                getArguments().getInt(IntentKey.POSITION.getText()));
+                        TaskUpdateEvent event = new TaskUpdateEvent(binding.text.getText().toString(),
+                                binding.checkBox.isChecked(),
+                                getArguments().getInt(IntentKey.POSITION.toString()));
                         BusHolder.get().post(event);
                     }
                 })

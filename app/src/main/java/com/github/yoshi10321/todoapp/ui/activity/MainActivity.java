@@ -10,7 +10,7 @@ import android.view.View;
 import com.github.yoshi10321.todoapp.R;
 import com.github.yoshi10321.todoapp.databinding.ActivityMainBinding;
 import com.github.yoshi10321.todoapp.event.BusHolder;
-import com.github.yoshi10321.todoapp.event.TextUpdateEvent;
+import com.github.yoshi10321.todoapp.event.TaskUpdateEvent;
 import com.github.yoshi10321.todoapp.ui.adapter.RecyclerAdapter;
 import com.github.yoshi10321.todoapp.ui.callback.TaskItemTouchHelperCallback;
 import com.squareup.otto.Subscribe;
@@ -58,8 +58,8 @@ public class MainActivity extends FragmentActivity {
     };
 
     @Subscribe
-    public void updateTaskText(TextUpdateEvent event) {
-        mRecyclerAdapter.updateItem(event.getPosition(), event.getText());
+    public void updateTask(TaskUpdateEvent event) {
+        mRecyclerAdapter.updateItem(event.getPosition(), event.getText(), event.isDone());
     }
 
 }

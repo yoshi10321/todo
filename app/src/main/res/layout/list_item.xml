@@ -3,6 +3,7 @@
     <data>
         <variable name="taskData" type="com.github.yoshi10321.todoapp.ui.bind.TaskData"/>
         <variable name="onEditClick" type="android.view.View.OnClickListener"/>
+        <import type="android.graphics.Paint"/>
     </data>
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
@@ -23,13 +24,15 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{taskData.text}"
                     android:padding="10dp"
                     android:singleLine="false"
+                    android:paintFlags="@{taskData.done ? Paint.STRIKE_THRU_TEXT_FLAG : 0}"
                     />
+
             </RelativeLayout>
 
             </android.support.v7.widget.CardView>

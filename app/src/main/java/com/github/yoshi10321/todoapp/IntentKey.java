@@ -5,15 +5,18 @@ package com.github.yoshi10321.todoapp;
  */
 public enum IntentKey {
     TASK_TEXT("text"),
+    TASK_CHECKED("checked"),
     POSITION("position");
 
-    private String mText;
+    private String mString;
 
-    IntentKey(String text) {
-        mText = text;
+    IntentKey(String str) {
+        mString = str;
     }
 
-    public String getText() {
-        return mText;
+    @Override
+    public String toString() {
+        return mString;
     }
+
 }

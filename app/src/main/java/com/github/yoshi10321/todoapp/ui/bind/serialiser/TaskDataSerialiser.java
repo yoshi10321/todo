@@ -16,6 +16,7 @@ public class TaskDataSerialiser implements JsonSerializer<TaskData> {
     public JsonElement serialize(TaskData taskData, Type typeOfSrc, JsonSerializationContext context) {
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("text", taskData.getText());
+        jsonObject.addProperty("done", taskData.isDone());
         return jsonObject;
     }
 }

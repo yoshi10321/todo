@@ -36,6 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
     private Context mContext;
     private RecyclerView mRecyclerView;
     private TaskJsonDto mTaskJsonDto;
+    private CustomViewHolder mHolder;
 
     public RecyclerAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -73,12 +74,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.mBinding.setTaskData(mTaskList.get(position));
-        holder.mBinding.setOnEditClick(mOnEditClick);
-        holder.mBinding.executePendingBindings();
+        mHolder = holder;
+        mHolder.binding.setTaskData(mTaskList.get(position));
+        mHolder.binding.setOnEditClick(mOnEditClick);
+        mHolder.binding.executePendingBindings();
 
         Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-        holder.mBinding.getRoot().startAnimation(animation);
+        mHolder.binding.getRoot().startAnimation(animation);
     }
 
     private View.OnClickListener mOnEditClick = new View.OnClickListener() {
@@ -86,8 +88,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         public void onClick(View v) {
             int position = mRecyclerView.getChildAdapterPosition(v);
             Bundle bundle = new Bundle();
-            bundle.putString(IntentKey.TASK_TEXT.getText(), mTaskList.get(position).getText());
-            bundle.putInt(IntentKey.POSITION.getText(), position);
+            bundle.putString(IntentKey.TASK_TEXT.toString(), mTaskList.get(position).getText());
+            bundle.putBoolean(IntentKey.TASK_CHECKED.toString(), mTaskList.get(position).isDone());
+            bundle.putInt(IntentKey.POSITION.toString(), position);
 
             EditDialogFragment editDialogFragment = new EditDialogFragment();
             editDialogFragment.setArguments(bundle);
@@ -106,9 +109,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         mTaskJsonDto.save();
     }
 
-    public void updateItem(int position, String text) {
+    public void updateItem(int position, String text, boolean done) {
         TaskData task = mTaskList.get(position);
         task.setText(text);
+        task.setDone(done);
         notifyItemChanged(position);
 
         mTaskJsonDto.json = mGson.toJson(mTaskList);
@@ -125,9 +129,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
     public void moveItemPos(int fromPosition, int targetPosition) {
 
-        TaskData item = mTaskList.get(fromPosition);
+        TaskData task = mTaskList.get(fromPosition);
         mTaskList.remove(fromPosition);
-        mTaskList.add(targetPosition, item);
+        mTaskList.add(targetPosition, task);
         notifyItemMoved(fromPosition, targetPosition);
 
         mTaskJsonDto.json = mGson.toJson(mTaskList);
@@ -141,11 +145,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        private ListItemBinding mBinding;
+        private ListItemBinding binding;
 
         public CustomViewHolder(ListItemBinding binding) {
             super(binding.getRoot());
-            mBinding = binding;
+            this.binding = binding;
         }
     }
 }
